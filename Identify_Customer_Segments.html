@@ -18541,6 +18541,7 @@ Name: PLZ8_BAUMAX, dtype: int64
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">azdias</span><span class="p">[</span><span class="s1">&#39;PLZ8_BAUMAX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">azdias</span><span class="p">[</span><span class="s1">&#39;PLZ8_BAUMAX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">azdias</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">azdias</span><span class="p">[</span><span class="s2">&quot;WOHNLAGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
 <span class="n">azdias</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">azdias</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 
@@ -18554,7 +18555,7 @@ Name: PLZ8_BAUMAX, dtype: int64
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Discussion-1.2.2:-Engineer-Mixed-Type-Features">Discussion 1.2.2: Engineer Mixed-Type Features<a class="anchor-link" href="#Discussion-1.2.2:-Engineer-Mixed-Type-Features">&#182;</a></h4><p>(Double-click this cell and replace this text with your own text, reporting your findings and decisions regarding mixed-value features. Which ones did you keep, which did you drop, and what engineering steps did you perform?)</p>
-<p><code>PLZ8_BAUMAX</code> and <code>WOHNLAGE</code> features were not dropped since going by their definition from the <code>Data_Dictionary.md</code> file it appeared that there is some kind of ordering within their values. Hence, these features are typecasted to float.</p>
+<p><code>PLZ8_BAUMAX</code> and <code>WOHNLAGE</code> features were not dropped since going by their definition from the <code>Data_Dictionary.md</code> file it appeared that there is some kind of ordering within their values. <code>WOHNLAGE</code> feature has a different meaning for 7 and 8 values as compared to those from 1 to 5. Therefore, the values with 7 and 8 have been replaced with NaN, and the rest are left as is. Later, these features are typecasted to float.</p>
 <p><code>LP_LEBENSPHASE_FEIN</code> and <code>LP_LEBENSPHASE_GROB</code> were dropped since there is no intuitive ordering in its values and the number of unique values they take are pretty large.</p>
 <p><code>CAMEO_INTL_2015</code> and <code>PRAEGENDE_JUGENDJAHRE</code> variables were feature engineered as per the given directions. For this purpose <code>PRAEGENDE_JUGENDJAHRE_movement</code> and <code>PRAEGENDE_JUGENDJAHRE_decade</code> dictionaries were created to map between the present values to the desired ones. In the dictionary <code>PRAEGENDE_JUGENDJAHRE_movement</code>, 'mainstream' is coded as 1 and 'avantgarde' is coded as 2. Similarly, in the dictionary <code>PRAEGENDE_JUGENDJAHRE_decade</code>, 40s, 50s, 60s, 70s, 80s and 90s are coded as 1, 2, 3, 4, 5 and 6 respectively.</p>
 
@@ -18854,6 +18855,7 @@ CAMEO_INTL_2015_lifestyle --- float32
     <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">to_be_dropped</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;PLZ8_BAUMAX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;PLZ8_BAUMAX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;WOHNLAGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;WOHNLAGE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     
     <span class="n">pct_threshold</span> <span class="o">=</span> <span class="mf">0.4</span>
@@ -18908,7 +18910,7 @@ CAMEO_INTL_2015_lifestyle --- float32
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(798070, 79)</pre>
+<pre>(798069, 79)</pre>
 </div>
 
 </div>
@@ -18954,7 +18956,7 @@ CAMEO_INTL_2015_lifestyle --- float32
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(798070, 79)</pre>
+<pre>(798069, 79)</pre>
 </div>
 
 </div>
@@ -19125,7 +19127,7 @@ CAMEO_INTL_2015_lifestyle        --- float32  --- float32
 <div class="output_text output_subarea output_execute_result">
 <pre>ALTERSKATEGORIE_GROB               2803
 ANREDE_KZ                             0
-CJT_GESAMTTYP                      4751
+CJT_GESAMTTYP                      4750
 FINANZ_MINIMALIST                     0
 FINANZ_SPARER                         0
 FINANZ_VORSORGER                      0
@@ -19133,15 +19135,15 @@ FINANZ_ANLEGER                        0
 FINANZ_UNAUFFAELLIGER                 0
 FINANZ_HAUSBAUER                      0
 FINANZTYP                             0
-GFK_URLAUBERTYP                    4751
+GFK_URLAUBERTYP                    4750
 GREEN_AVANTGARDE                      0
-HEALTH_TYP                        36729
-LP_FAMILIE_FEIN                   31477
-LP_FAMILIE_GROB                   31477
-LP_STATUS_FEIN                     4751
-LP_STATUS_GROB                     4751
-NATIONALITAET_KZ                  33926
-RETOURTYP_BK_S                     4751
+HEALTH_TYP                        36728
+LP_FAMILIE_FEIN                   31476
+LP_FAMILIE_GROB                   31476
+LP_STATUS_FEIN                     4750
+LP_STATUS_GROB                     4750
+NATIONALITAET_KZ                  33925
+RETOURTYP_BK_S                     4750
 SEMIO_SOZ                             0
 SEMIO_FAM                             0
 SEMIO_REL                             0
@@ -19154,34 +19156,34 @@ SEMIO_RAT                             0
 SEMIO_KRIT                            0
 SEMIO_DOM                             0
                                   ...  
-KBA05_ANTG1                       40173
-KBA05_ANTG2                       40173
-KBA05_ANTG3                       40173
-KBA05_ANTG4                       40173
-KBA05_GBZ                         40173
+KBA05_ANTG1                       40172
+KBA05_ANTG2                       40172
+KBA05_ANTG3                       40172
+KBA05_ANTG4                       40172
+KBA05_GBZ                         40172
 BALLRAUM                            592
 EWDICHTE                            592
 INNENSTADT                          592
 GEBAEUDETYP_RASTER                    7
-KKK                               64913
-MOBI_REGIO                        40173
-ONLINE_AFFINITAET                  4751
-REGIOTYP                          64913
-KBA13_ANZAHL_PKW                  12649
-PLZ8_ANTG1                        23364
-PLZ8_ANTG2                        23364
-PLZ8_ANTG3                        23364
-PLZ8_ANTG4                        23364
-PLZ8_BAUMAX                       23364
-PLZ8_HHZ                          23364
-PLZ8_GBZ                          23364
+KKK                               64912
+MOBI_REGIO                        40172
+ONLINE_AFFINITAET                  4750
+REGIOTYP                          64912
+KBA13_ANZAHL_PKW                  12648
+PLZ8_ANTG1                        23363
+PLZ8_ANTG2                        23363
+PLZ8_ANTG3                        23363
+PLZ8_ANTG4                        23363
+PLZ8_BAUMAX                       23363
+PLZ8_HHZ                          23363
+PLZ8_GBZ                          23363
 ARBEIT                             4227
 ORTSGR_KLS9                        4126
 RELAT_AB                           4227
 OST_WEST_KZ_O                         0
 OST_WEST_KZ_W                         0
-PRAEGENDE_JUGENDJAHRE_decade      28761
-PRAEGENDE_JUGENDJAHRE_movement    28761
+PRAEGENDE_JUGENDJAHRE_decade      28760
+PRAEGENDE_JUGENDJAHRE_movement    28760
 CAMEO_INTL_2015_wealth             6202
 CAMEO_INTL_2015_lifestyle          6202
 Length: 79, dtype: int64</pre>
@@ -19219,36 +19221,36 @@ Length: 79, dtype: int64</pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>1          0
 2          0
-3          5
+3          6
 4          0
-5          0
+5          1
 6          0
 7          0
 8          0
-9          0
+9          1
 10         0
 12         6
 13         8
 15         8
-16         4
+16         5
 18         3
 19         0
 20        10
 21         0
 22         0
 23         8
-25         3
-26        19
+25         4
+26        20
 27         0
 28         0
 29         2
 31         0
-32         0
+32         1
 33         0
 34         4
 36         0
           ..
-891191     0
+891191     1
 891192     0
 891193     0
 891194     0
@@ -19265,7 +19267,7 @@ Length: 79, dtype: int64</pre>
 891205     0
 891206     0
 891207     0
-891208     3
+891208     4
 891209     0
 891210     0
 891211     0
@@ -19275,10 +19277,10 @@ Length: 79, dtype: int64</pre>
 891215     0
 891216     3
 891217     4
-891218     3
+891218     4
 891219     0
 891220     0
-Length: 798070, dtype: int64</pre>
+Length: 798069, dtype: int64</pre>
 </div>
 
 </div>
@@ -19311,7 +19313,7 @@ Length: 798070, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(798070, 79)</pre>
+<pre>(798069, 79)</pre>
 </div>
 
 </div>
@@ -19344,7 +19346,7 @@ Length: 798070, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(623211, 79)</pre>
+<pre>(486272, 79)</pre>
 </div>
 
 </div>
@@ -19846,60 +19848,60 @@ Length: 798070, dtype: int64</pre>
       <td>KBA13_ANZAHL_PKW</td>
       <td>619.701439</td>
       <td>340.034318</td>
-      <td>632.068771</td>
-      <td>351.123962</td>
-      <td>1.236733e+01</td>
-      <td>1.108964e+01</td>
+      <td>632.067809</td>
+      <td>351.123130</td>
+      <td>1.236637e+01</td>
+      <td>1.108881e+01</td>
     </tr>
     <tr>
       <th>40</th>
       <td>W_KEIT_KIND_HH</td>
-      <td>4.161734</td>
+      <td>4.161731</td>
       <td>1.778827</td>
-      <td>4.298341</td>
+      <td>4.298339</td>
       <td>1.778073</td>
-      <td>1.366071e-01</td>
-      <td>-7.547421e-04</td>
+      <td>1.366075e-01</td>
+      <td>-7.545666e-04</td>
     </tr>
     <tr>
       <th>61</th>
       <td>REGIOTYP</td>
       <td>4.472086</td>
       <td>1.836357</td>
-      <td>4.596362</td>
-      <td>1.808966</td>
-      <td>1.242767e-01</td>
-      <td>-2.739058e-02</td>
+      <td>4.596361</td>
+      <td>1.808967</td>
+      <td>1.242749e-01</td>
+      <td>-2.739013e-02</td>
     </tr>
     <tr>
       <th>75</th>
       <td>PRAEGENDE_JUGENDJAHRE_decade</td>
       <td>4.332008</td>
       <td>1.457412</td>
-      <td>4.392120</td>
+      <td>4.392118</td>
       <td>1.464293</td>
-      <td>6.011140e-02</td>
-      <td>6.881274e-03</td>
+      <td>6.010939e-02</td>
+      <td>6.881085e-03</td>
     </tr>
     <tr>
       <th>12</th>
       <td>HEALTH_TYP</td>
       <td>2.199016</td>
       <td>0.755170</td>
-      <td>2.235879</td>
+      <td>2.235878</td>
       <td>0.756442</td>
-      <td>3.686311e-02</td>
-      <td>1.271631e-03</td>
+      <td>3.686215e-02</td>
+      <td>1.271621e-03</td>
     </tr>
     <tr>
       <th>10</th>
       <td>GFK_URLAUBERTYP</td>
       <td>7.471241</td>
       <td>3.575228</td>
-      <td>7.498201</td>
-      <td>3.581555</td>
-      <td>2.696014e-02</td>
-      <td>6.326182e-03</td>
+      <td>7.498195</td>
+      <td>3.581553</td>
+      <td>2.695450e-02</td>
+      <td>6.324881e-03</td>
     </tr>
     <tr>
       <th>58</th>
@@ -19907,39 +19909,39 @@ Length: 798070, dtype: int64</pre>
       <td>2.723384</td>
       <td>0.979867</td>
       <td>2.745883</td>
-      <td>0.942211</td>
-      <td>2.249925e-02</td>
-      <td>-3.765612e-02</td>
+      <td>0.942212</td>
+      <td>2.249893e-02</td>
+      <td>-3.765557e-02</td>
     </tr>
     <tr>
       <th>35</th>
       <td>VERS_TYP</td>
       <td>1.517820</td>
       <td>0.499683</td>
-      <td>1.540012</td>
+      <td>1.540011</td>
       <td>0.498397</td>
-      <td>2.219105e-02</td>
-      <td>-1.285846e-03</td>
+      <td>2.219047e-02</td>
+      <td>-1.285800e-03</td>
     </tr>
     <tr>
       <th>48</th>
       <td>CAMEO_DEUG_2015</td>
-      <td>5.537667</td>
+      <td>5.537670</td>
       <td>2.489831</td>
-      <td>5.556802</td>
+      <td>5.556805</td>
       <td>2.489545</td>
-      <td>1.913524e-02</td>
-      <td>-2.859532e-04</td>
+      <td>1.913558e-02</td>
+      <td>-2.860386e-04</td>
     </tr>
     <tr>
       <th>77</th>
       <td>CAMEO_INTL_2015_wealth</td>
-      <td>3.262099</td>
-      <td>1.464494</td>
-      <td>3.275605</td>
-      <td>1.466753</td>
-      <td>1.350563e-02</td>
-      <td>2.259056e-03</td>
+      <td>3.262101</td>
+      <td>1.464495</td>
+      <td>3.275606</td>
+      <td>1.466754</td>
+      <td>1.350556e-02</td>
+      <td>2.259042e-03</td>
     </tr>
     <tr>
       <th>65</th>
@@ -19947,29 +19949,29 @@ Length: 798070, dtype: int64</pre>
       <td>1.595426</td>
       <td>0.986736</td>
       <td>1.607270</td>
-      <td>0.974574</td>
-      <td>1.184416e-02</td>
-      <td>-1.216158e-02</td>
+      <td>0.974575</td>
+      <td>1.184367e-02</td>
+      <td>-1.216107e-02</td>
     </tr>
     <tr>
       <th>18</th>
       <td>RETOURTYP_BK_S</td>
       <td>3.443104</td>
       <td>1.454420</td>
-      <td>3.452373</td>
+      <td>3.452371</td>
       <td>1.455022</td>
-      <td>9.268375e-03</td>
-      <td>6.018849e-04</td>
+      <td>9.266436e-03</td>
+      <td>6.017652e-04</td>
     </tr>
     <tr>
       <th>60</th>
       <td>ONLINE_AFFINITAET</td>
       <td>2.732972</td>
       <td>1.555709</td>
-      <td>2.740515</td>
-      <td>1.554130</td>
-      <td>7.542757e-03</td>
-      <td>-1.578189e-03</td>
+      <td>2.740514</td>
+      <td>1.554131</td>
+      <td>7.541178e-03</td>
+      <td>-1.577855e-03</td>
     </tr>
     <tr>
       <th>64</th>
@@ -19978,48 +19980,48 @@ Length: 798070, dtype: int64</pre>
       <td>0.920309</td>
       <td>2.807658</td>
       <td>0.907353</td>
-      <td>5.800739e-03</td>
-      <td>-1.295636e-02</td>
+      <td>5.800498e-03</td>
+      <td>-1.295582e-02</td>
     </tr>
     <tr>
       <th>70</th>
       <td>ARBEIT</td>
       <td>3.166687</td>
-      <td>0.999070</td>
+      <td>0.999071</td>
       <td>3.171100</td>
-      <td>0.998255</td>
-      <td>4.413668e-03</td>
-      <td>-8.151890e-04</td>
+      <td>0.998256</td>
+      <td>4.413672e-03</td>
+      <td>-8.151937e-04</td>
     </tr>
     <tr>
       <th>2</th>
       <td>CJT_GESAMTTYP</td>
       <td>3.502899</td>
       <td>1.537613</td>
-      <td>3.505858</td>
-      <td>1.533506</td>
-      <td>2.959189e-03</td>
-      <td>-4.106785e-03</td>
+      <td>3.505857</td>
+      <td>1.533507</td>
+      <td>2.958570e-03</td>
+      <td>-4.105924e-03</td>
     </tr>
     <tr>
       <th>55</th>
       <td>EWDICHTE</td>
-      <td>3.939178</td>
-      <td>1.718992</td>
-      <td>3.940707</td>
-      <td>1.719270</td>
-      <td>1.528696e-03</td>
-      <td>2.780751e-04</td>
+      <td>3.939182</td>
+      <td>1.718990</td>
+      <td>3.940711</td>
+      <td>1.719268</td>
+      <td>1.528695e-03</td>
+      <td>2.780740e-04</td>
     </tr>
     <tr>
       <th>54</th>
       <td>BALLRAUM</td>
-      <td>4.153045</td>
-      <td>2.183710</td>
-      <td>4.154415</td>
-      <td>2.183479</td>
-      <td>1.370052e-03</td>
-      <td>-2.309825e-04</td>
+      <td>4.153043</td>
+      <td>2.183711</td>
+      <td>4.154413</td>
+      <td>2.183480</td>
+      <td>1.370055e-03</td>
+      <td>-2.309816e-04</td>
     </tr>
     <tr>
       <th>0</th>
@@ -20027,19 +20029,19 @@ Length: 798070, dtype: int64</pre>
       <td>2.795413</td>
       <td>1.018406</td>
       <td>2.796132</td>
-      <td>1.016688</td>
-      <td>7.185539e-04</td>
-      <td>-1.717964e-03</td>
+      <td>1.016689</td>
+      <td>7.185557e-04</td>
+      <td>-1.717967e-03</td>
     </tr>
     <tr>
       <th>56</th>
       <td>INNENSTADT</td>
       <td>4.549487</td>
-      <td>2.028918</td>
+      <td>2.028919</td>
       <td>4.549821</td>
-      <td>2.028202</td>
-      <td>3.341857e-04</td>
-      <td>-7.155674e-04</td>
+      <td>2.028204</td>
+      <td>3.341865e-04</td>
+      <td>-7.155687e-04</td>
     </tr>
     <tr>
       <th>57</th>
@@ -20047,39 +20049,39 @@ Length: 798070, dtype: int64</pre>
       <td>3.738305</td>
       <td>0.923193</td>
       <td>3.738307</td>
-      <td>0.923189</td>
-      <td>2.295368e-06</td>
-      <td>-3.723421e-06</td>
+      <td>0.923190</td>
+      <td>2.295374e-06</td>
+      <td>-3.723427e-06</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>GEBAEUDETYP</td>
+      <td>2.798633</td>
+      <td>2.656706</td>
+      <td>2.798633</td>
+      <td>2.656706</td>
+      <td>7.791371e-08</td>
+      <td>-7.439052e-08</td>
     </tr>
     <tr>
       <th>9</th>
       <td>FINANZTYP</td>
-      <td>3.797736</td>
-      <td>2.084704</td>
-      <td>3.797736</td>
-      <td>2.084704</td>
-      <td>9.651700e-08</td>
-      <td>8.052789e-08</td>
+      <td>3.797739</td>
+      <td>2.084703</td>
+      <td>3.797739</td>
+      <td>2.084703</td>
+      <td>2.586976e-08</td>
+      <td>-1.204100e-08</td>
     </tr>
     <tr>
       <th>1</th>
       <td>ANREDE_KZ</td>
-      <td>1.521488</td>
+      <td>1.521487</td>
       <td>0.499538</td>
-      <td>1.521488</td>
+      <td>1.521487</td>
       <td>0.499538</td>
-      <td>1.952919e-08</td>
-      <td>-4.713015e-10</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>GREEN_AVANTGARDE</td>
-      <td>0.219561</td>
-      <td>0.413949</td>
-      <td>0.219561</td>
-      <td>0.413949</td>
-      <td>4.676276e-09</td>
-      <td>-7.842461e-09</td>
+      <td>1.598850e-08</td>
+      <td>-4.481782e-09</td>
     </tr>
     <tr>
       <th>34</th>
@@ -20088,45 +20090,45 @@ Length: 798070, dtype: int64</pre>
       <td>0.091355</td>
       <td>0.008417</td>
       <td>0.091355</td>
-      <td>4.821681e-11</td>
-      <td>-6.624143e-10</td>
+      <td>3.498179e-10</td>
+      <td>3.932760e-09</td>
     </tr>
     <tr>
       <th>32</th>
       <td>SEMIO_TRADV</td>
-      <td>3.724240</td>
-      <td>1.765538</td>
-      <td>3.724240</td>
-      <td>1.765538</td>
+      <td>3.724241</td>
+      <td>1.765539</td>
+      <td>3.724241</td>
+      <td>1.765539</td>
       <td>0.000000e+00</td>
       <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>46</th>
       <td>MIN_GEBAEUDEJAHR</td>
-      <td>1993.276958</td>
-      <td>3.332604</td>
-      <td>1993.276958</td>
-      <td>3.332604</td>
+      <td>1993.276948</td>
+      <td>3.332595</td>
+      <td>1993.276948</td>
+      <td>3.332595</td>
       <td>0.000000e+00</td>
       <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>41</th>
       <td>WOHNDAUER_2008</td>
-      <td>7.908925</td>
-      <td>1.923162</td>
-      <td>7.908925</td>
-      <td>1.923162</td>
+      <td>7.908930</td>
+      <td>1.923158</td>
+      <td>7.908930</td>
+      <td>1.923158</td>
       <td>0.000000e+00</td>
       <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>73</th>
       <td>OST_WEST_KZ_O</td>
-      <td>0.211188</td>
+      <td>0.211189</td>
       <td>0.408152</td>
-      <td>0.211188</td>
+      <td>0.211189</td>
       <td>0.408152</td>
       <td>0.000000e+00</td>
       <td>0.000000e+00</td>
@@ -20152,74 +20154,64 @@ Length: 798070, dtype: int64</pre>
       <td>...</td>
     </tr>
     <tr>
+      <th>25</th>
+      <td>SEMIO_ERL</td>
+      <td>4.622123</td>
+      <td>1.826790</td>
+      <td>4.622123</td>
+      <td>1.826790</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>SEMIO_KULT</td>
+      <td>4.131903</td>
+      <td>1.957758</td>
+      <td>4.131903</td>
+      <td>1.957758</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
       <th>29</th>
       <td>SEMIO_DOM</td>
-      <td>4.554317</td>
+      <td>4.554315</td>
       <td>1.826146</td>
-      <td>4.554317</td>
+      <td>4.554315</td>
       <td>1.826146</td>
       <td>0.000000e+00</td>
       <td>0.000000e+00</td>
     </tr>
     <tr>
-      <th>30</th>
-      <td>SEMIO_KAEM</td>
-      <td>4.294272</td>
-      <td>1.867632</td>
-      <td>4.294272</td>
-      <td>1.867632</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>SEMIO_REL</td>
-      <td>3.994592</td>
-      <td>1.910509</td>
-      <td>3.994592</td>
-      <td>1.910509</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>GEBAEUDETYP</td>
-      <td>2.798630</td>
-      <td>2.656705</td>
-      <td>2.798630</td>
-      <td>2.656705</td>
-      <td>-3.004707e-08</td>
-      <td>-2.226994e-08</td>
+      <th>11</th>
+      <td>GREEN_AVANTGARDE</td>
+      <td>0.219561</td>
+      <td>0.413950</td>
+      <td>0.219561</td>
+      <td>0.413950</td>
+      <td>-3.330551e-09</td>
+      <td>-2.731709e-10</td>
     </tr>
     <tr>
       <th>36</th>
       <td>ZABEOTYP</td>
-      <td>3.378583</td>
-      <td>1.407778</td>
-      <td>3.378583</td>
-      <td>1.407778</td>
-      <td>-9.895475e-08</td>
-      <td>4.626484e-08</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>WOHNLAGE</td>
-      <td>4.052843</td>
-      <td>1.949529</td>
-      <td>4.052842</td>
-      <td>1.949529</td>
-      <td>-1.345459e-07</td>
-      <td>5.143425e-08</td>
+      <td>3.378580</td>
+      <td>1.407776</td>
+      <td>3.378580</td>
+      <td>1.407776</td>
+      <td>-4.579392e-08</td>
+      <td>1.580278e-08</td>
     </tr>
     <tr>
       <th>45</th>
       <td>KONSUMNAEHE</td>
       <td>3.023208</td>
-      <td>1.550715</td>
+      <td>1.550716</td>
       <td>3.023026</td>
-      <td>1.550764</td>
-      <td>-1.825291e-04</td>
-      <td>4.910992e-05</td>
+      <td>1.550765</td>
+      <td>-1.825293e-04</td>
+      <td>4.910986e-05</td>
     </tr>
     <tr>
       <th>43</th>
@@ -20228,8 +20220,8 @@ Length: 798070, dtype: int64</pre>
       <td>0.324029</td>
       <td>0.040450</td>
       <td>0.323257</td>
-      <td>-1.965945e-04</td>
-      <td>-7.722609e-04</td>
+      <td>-1.965950e-04</td>
+      <td>-7.722623e-04</td>
     </tr>
     <tr>
       <th>72</th>
@@ -20238,18 +20230,18 @@ Length: 798070, dtype: int64</pre>
       <td>1.360533</td>
       <td>3.070658</td>
       <td>1.356935</td>
-      <td>-3.762346e-04</td>
-      <td>-3.598042e-03</td>
+      <td>-3.762355e-04</td>
+      <td>-3.598049e-03</td>
     </tr>
     <tr>
       <th>71</th>
       <td>ORTSGR_KLS9</td>
-      <td>5.293391</td>
+      <td>5.293394</td>
       <td>2.303375</td>
-      <td>5.291874</td>
+      <td>5.291877</td>
       <td>2.297509</td>
-      <td>-1.516823e-03</td>
-      <td>-5.865565e-03</td>
+      <td>-1.516840e-03</td>
+      <td>-5.865571e-03</td>
     </tr>
     <tr>
       <th>17</th>
@@ -20257,19 +20249,19 @@ Length: 798070, dtype: int64</pre>
       <td>1.168530</td>
       <td>0.474721</td>
       <td>1.161366</td>
-      <td>0.465764</td>
-      <td>-7.164205e-03</td>
-      <td>-8.957097e-03</td>
+      <td>0.465765</td>
+      <td>-7.164002e-03</td>
+      <td>-8.956840e-03</td>
     </tr>
     <tr>
       <th>63</th>
       <td>PLZ8_ANTG1</td>
       <td>2.253330</td>
       <td>0.972008</td>
-      <td>2.245913</td>
+      <td>2.245914</td>
       <td>0.958626</td>
-      <td>-7.416384e-03</td>
-      <td>-1.338205e-02</td>
+      <td>-7.416076e-03</td>
+      <td>-1.338149e-02</td>
     </tr>
     <tr>
       <th>53</th>
@@ -20277,9 +20269,9 @@ Length: 798070, dtype: int64</pre>
       <td>3.158580</td>
       <td>1.329537</td>
       <td>3.150597</td>
-      <td>1.296106</td>
-      <td>-7.982530e-03</td>
-      <td>-3.343118e-02</td>
+      <td>1.296107</td>
+      <td>-7.982342e-03</td>
+      <td>-3.343038e-02</td>
     </tr>
     <tr>
       <th>76</th>
@@ -20287,19 +20279,19 @@ Length: 798070, dtype: int64</pre>
       <td>1.227769</td>
       <td>0.419393</td>
       <td>1.219561</td>
-      <td>0.413949</td>
-      <td>-8.208395e-03</td>
-      <td>-5.443793e-03</td>
+      <td>0.413950</td>
+      <td>-8.208120e-03</td>
+      <td>-5.443607e-03</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LP_STATUS_GROB</td>
       <td>2.460383</td>
       <td>1.511671</td>
-      <td>2.451690</td>
+      <td>2.451692</td>
       <td>1.511346</td>
-      <td>-8.693714e-03</td>
-      <td>-3.252064e-04</td>
+      <td>-8.691895e-03</td>
+      <td>-3.251332e-04</td>
     </tr>
     <tr>
       <th>69</th>
@@ -20307,59 +20299,59 @@ Length: 798070, dtype: int64</pre>
       <td>3.381087</td>
       <td>1.111598</td>
       <td>3.369930</td>
-      <td>1.097088</td>
-      <td>-1.115655e-02</td>
-      <td>-1.450968e-02</td>
+      <td>1.097089</td>
+      <td>-1.115608e-02</td>
+      <td>-1.450907e-02</td>
     </tr>
     <tr>
       <th>78</th>
       <td>CAMEO_INTL_2015_lifestyle</td>
-      <td>2.873034</td>
-      <td>1.484771</td>
-      <td>2.858479</td>
-      <td>1.488108</td>
-      <td>-1.455590e-02</td>
-      <td>3.336665e-03</td>
+      <td>2.873032</td>
+      <td>1.484770</td>
+      <td>2.858476</td>
+      <td>1.488107</td>
+      <td>-1.455572e-02</td>
+      <td>3.336739e-03</td>
     </tr>
     <tr>
       <th>52</th>
       <td>KBA05_ANTG4</td>
       <td>0.305927</td>
       <td>0.638725</td>
-      <td>0.290527</td>
+      <td>0.290528</td>
       <td>0.626025</td>
-      <td>-1.539965e-02</td>
-      <td>-1.269994e-02</td>
+      <td>-1.539928e-02</td>
+      <td>-1.269963e-02</td>
     </tr>
     <tr>
       <th>68</th>
       <td>PLZ8_HHZ</td>
       <td>3.612821</td>
       <td>0.973967</td>
-      <td>3.594880</td>
+      <td>3.594881</td>
       <td>0.965149</td>
-      <td>-1.794072e-02</td>
-      <td>-8.817745e-03</td>
+      <td>-1.793997e-02</td>
+      <td>-8.817370e-03</td>
     </tr>
     <tr>
       <th>66</th>
       <td>PLZ8_ANTG4</td>
       <td>0.699166</td>
       <td>0.727137</td>
-      <td>0.678697</td>
+      <td>0.678698</td>
       <td>0.726045</td>
-      <td>-2.046852e-02</td>
-      <td>-1.092028e-03</td>
+      <td>-2.046767e-02</td>
+      <td>-1.091970e-03</td>
     </tr>
     <tr>
       <th>15</th>
       <td>LP_STATUS_FEIN</td>
       <td>4.791410</td>
       <td>3.520278</td>
-      <td>4.768840</td>
-      <td>3.521882</td>
-      <td>-2.257062e-02</td>
-      <td>1.603483e-03</td>
+      <td>4.768845</td>
+      <td>3.521881</td>
+      <td>-2.256590e-02</td>
+      <td>1.603163e-03</td>
     </tr>
     <tr>
       <th>33</th>
@@ -20367,89 +20359,99 @@ Length: 798070, dtype: int64</pre>
       <td>1.578632</td>
       <td>1.026109</td>
       <td>1.552002</td>
-      <td>1.009525</td>
-      <td>-2.662994e-02</td>
-      <td>-1.658303e-02</td>
+      <td>1.009526</td>
+      <td>-2.662924e-02</td>
+      <td>-1.658259e-02</td>
     </tr>
     <tr>
       <th>67</th>
       <td>PLZ8_BAUMAX</td>
       <td>1.943913</td>
       <td>1.459654</td>
-      <td>1.916279</td>
-      <td>1.446905</td>
-      <td>-2.763359e-02</td>
-      <td>-1.274850e-02</td>
+      <td>1.916280</td>
+      <td>1.446906</td>
+      <td>-2.763244e-02</td>
+      <td>-1.274795e-02</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>WOHNLAGE</td>
+      <td>3.123690</td>
+      <td>1.116926</td>
+      <td>3.094740</td>
+      <td>0.978919</td>
+      <td>-2.894972e-02</td>
+      <td>-1.380074e-01</td>
     </tr>
     <tr>
       <th>51</th>
       <td>KBA05_ANTG3</td>
       <td>0.624525</td>
       <td>1.013443</td>
-      <td>0.593088</td>
-      <td>0.997001</td>
-      <td>-3.143717e-02</td>
-      <td>-1.644174e-02</td>
+      <td>0.593089</td>
+      <td>0.997002</td>
+      <td>-3.143643e-02</td>
+      <td>-1.644133e-02</td>
     </tr>
     <tr>
       <th>14</th>
       <td>LP_FAMILIE_GROB</td>
       <td>2.377190</td>
       <td>1.699440</td>
-      <td>2.322871</td>
+      <td>2.322873</td>
       <td>1.687022</td>
-      <td>-5.431821e-02</td>
-      <td>-1.241841e-02</td>
+      <td>-5.431655e-02</td>
+      <td>-1.241800e-02</td>
     </tr>
     <tr>
       <th>42</th>
       <td>ANZ_HAUSHALTE_AKTIV</td>
-      <td>8.354950</td>
-      <td>15.673755</td>
-      <td>8.295388</td>
-      <td>15.624073</td>
-      <td>-5.956250e-02</td>
-      <td>-4.968233e-02</td>
+      <td>8.354947</td>
+      <td>15.673765</td>
+      <td>8.295384</td>
+      <td>15.624082</td>
+      <td>-5.956255e-02</td>
+      <td>-4.968245e-02</td>
     </tr>
     <tr>
       <th>50</th>
       <td>KBA05_ANTG2</td>
       <td>1.265584</td>
       <td>1.245178</td>
-      <td>1.201877</td>
+      <td>1.201879</td>
       <td>1.244583</td>
-      <td>-6.370655e-02</td>
-      <td>-5.942350e-04</td>
+      <td>-6.370505e-02</td>
+      <td>-5.941824e-04</td>
     </tr>
     <tr>
       <th>49</th>
       <td>KBA05_ANTG1</td>
       <td>1.494277</td>
       <td>1.403961</td>
-      <td>1.419058</td>
+      <td>1.419060</td>
       <td>1.406636</td>
-      <td>-7.521845e-02</td>
-      <td>2.675040e-03</td>
+      <td>-7.521667e-02</td>
+      <td>2.675024e-03</td>
     </tr>
     <tr>
       <th>59</th>
       <td>MOBI_REGIO</td>
       <td>2.963540</td>
       <td>1.428882</td>
-      <td>2.864700</td>
-      <td>1.457133</td>
-      <td>-9.884006e-02</td>
-      <td>2.825088e-02</td>
+      <td>2.864702</td>
+      <td>1.457132</td>
+      <td>-9.883773e-02</td>
+      <td>2.825030e-02</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LP_FAMILIE_FEIN</td>
       <td>3.911197</td>
       <td>3.936430</td>
-      <td>3.796375</td>
-      <td>3.899410</td>
-      <td>-1.148217e-01</td>
-      <td>-3.701950e-02</td>
+      <td>3.796379</td>
+      <td>3.899411</td>
+      <td>-1.148182e-01</td>
+      <td>-3.701832e-02</td>
     </tr>
   </tbody>
 </table>
@@ -20560,51 +20562,51 @@ Length: 798070, dtype: int64</pre>
   <tbody>
     <tr>
       <th>count</th>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
       <td>...</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
-      <td>7.980700e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
+      <td>7.980690e+05</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>-6.036413e-18</td>
-      <td>1.605793e-16</td>
-      <td>3.606935e-17</td>
-      <td>-5.796024e-17</td>
-      <td>-5.081983e-17</td>
-      <td>1.222952e-16</td>
-      <td>1.106498e-16</td>
-      <td>-3.276401e-18</td>
-      <td>-1.597602e-16</td>
-      <td>-3.472273e-17</td>
+      <td>1.561100e-16</td>
+      <td>-5.385591e-17</td>
+      <td>-1.015997e-16</td>
+      <td>-1.798461e-18</td>
+      <td>4.487250e-18</td>
+      <td>1.384459e-16</td>
+      <td>8.027192e-17</td>
+      <td>9.745524e-17</td>
+      <td>3.883608e-17</td>
+      <td>8.026302e-17</td>
       <td>...</td>
-      <td>3.710880e-17</td>
-      <td>9.104477e-17</td>
-      <td>4.371502e-17</td>
-      <td>-1.391491e-16</td>
-      <td>-1.253579e-16</td>
-      <td>1.253579e-16</td>
-      <td>1.096882e-17</td>
-      <td>1.190277e-16</td>
-      <td>-1.320176e-16</td>
-      <td>3.141071e-17</td>
+      <td>-5.559205e-17</td>
+      <td>2.054431e-16</td>
+      <td>-1.302371e-16</td>
+      <td>-5.418533e-17</td>
+      <td>-8.084173e-18</td>
+      <td>1.567332e-16</td>
+      <td>2.005908e-16</td>
+      <td>-2.753605e-16</td>
+      <td>1.360955e-16</td>
+      <td>-7.131523e-17</td>
     </tr>
     <tr>
       <th>std</th>
@@ -20632,123 +20634,123 @@ Length: 798070, dtype: int64</pre>
     </tr>
     <tr>
       <th>min</th>
-      <td>-1.766651e+00</td>
-      <td>-1.043941e+00</td>
-      <td>-1.634072e+00</td>
-      <td>-1.494590e+00</td>
-      <td>-1.155523e+00</td>
-      <td>-1.766970e+00</td>
-      <td>-1.249989e+00</td>
-      <td>-1.184941e+00</td>
-      <td>-1.501371e+00</td>
-      <td>-1.342031e+00</td>
+      <td>-1.766650e+00</td>
+      <td>-1.043939e+00</td>
+      <td>-1.634071e+00</td>
+      <td>-1.494593e+00</td>
+      <td>-1.155522e+00</td>
+      <td>-1.766969e+00</td>
+      <td>-1.249988e+00</td>
+      <td>-1.184940e+00</td>
+      <td>-1.501369e+00</td>
+      <td>-1.342033e+00</td>
       <td>...</td>
-      <td>-2.160202e+00</td>
-      <td>-2.174897e+00</td>
-      <td>-1.868056e+00</td>
-      <td>-1.525983e+00</td>
-      <td>-5.174259e-01</td>
-      <td>-1.932644e+00</td>
-      <td>-2.316559e+00</td>
-      <td>-5.304055e-01</td>
-      <td>-1.551458e+00</td>
-      <td>-1.248888e+00</td>
+      <td>-2.160201e+00</td>
+      <td>-2.174896e+00</td>
+      <td>-1.868058e+00</td>
+      <td>-1.525982e+00</td>
+      <td>-5.174263e-01</td>
+      <td>-1.932642e+00</td>
+      <td>-2.316558e+00</td>
+      <td>-5.304060e-01</td>
+      <td>-1.551459e+00</td>
+      <td>-1.248887e+00</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>-7.830647e-01</td>
-      <td>-1.043941e+00</td>
-      <td>-9.819711e-01</td>
-      <td>-7.686771e-01</td>
-      <td>-1.155523e+00</td>
+      <td>-7.830640e-01</td>
+      <td>-1.043939e+00</td>
+      <td>-9.819701e-01</td>
+      <td>-7.686795e-01</td>
+      <td>-1.155522e+00</td>
       <td>-1.040683e+00</td>
-      <td>-1.249989e+00</td>
-      <td>-1.184941e+00</td>
-      <td>-7.911978e-01</td>
-      <td>-8.623463e-01</td>
+      <td>-1.249988e+00</td>
+      <td>-1.184940e+00</td>
+      <td>-7.911967e-01</td>
+      <td>-8.623484e-01</td>
       <td>...</td>
-      <td>-3.371928e-01</td>
-      <td>-1.713995e-01</td>
-      <td>-5.622937e-01</td>
-      <td>-7.890275e-01</td>
-      <td>-5.174259e-01</td>
-      <td>5.174259e-01</td>
-      <td>-9.507116e-01</td>
-      <td>-5.304055e-01</td>
-      <td>-8.696797e-01</td>
-      <td>-1.248888e+00</td>
+      <td>-3.371930e-01</td>
+      <td>-1.713996e-01</td>
+      <td>-5.622949e-01</td>
+      <td>-7.890270e-01</td>
+      <td>-5.174263e-01</td>
+      <td>5.174263e-01</td>
+      <td>-9.507104e-01</td>
+      <td>-5.304060e-01</td>
+      <td>-8.696807e-01</td>
+      <td>-1.248887e+00</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>2.005219e-01</td>
-      <td>9.579088e-01</td>
-      <td>3.222305e-01</td>
-      <td>-4.276416e-02</td>
-      <td>1.911962e-01</td>
-      <td>4.118893e-01</td>
-      <td>1.079834e-01</td>
-      <td>-4.704192e-01</td>
-      <td>-8.102471e-02</td>
-      <td>9.702304e-02</td>
+      <td>2.005220e-01</td>
+      <td>9.579100e-01</td>
+      <td>3.222307e-01</td>
+      <td>-4.276607e-02</td>
+      <td>1.911983e-01</td>
+      <td>4.118886e-01</td>
+      <td>1.079853e-01</td>
+      <td>-4.704176e-01</td>
+      <td>-8.102389e-02</td>
+      <td>9.702141e-02</td>
       <td>...</td>
-      <td>-3.371928e-01</td>
-      <td>-1.713995e-01</td>
-      <td>-1.270395e-01</td>
-      <td>-5.207179e-02</td>
-      <td>-5.174259e-01</td>
-      <td>5.174259e-01</td>
-      <td>4.151359e-01</td>
-      <td>-5.304055e-01</td>
-      <td>4.938769e-01</td>
-      <td>9.510164e-02</td>
+      <td>-3.371930e-01</td>
+      <td>-1.713996e-01</td>
+      <td>-1.270407e-01</td>
+      <td>-5.207182e-02</td>
+      <td>-5.174263e-01</td>
+      <td>5.174263e-01</td>
+      <td>4.151373e-01</td>
+      <td>-5.304060e-01</td>
+      <td>4.938757e-01</td>
+      <td>9.510351e-02</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.184109e+00</td>
-      <td>9.579088e-01</td>
-      <td>9.743312e-01</td>
-      <td>6.831487e-01</td>
-      <td>8.645557e-01</td>
-      <td>1.138176e+00</td>
-      <td>7.869698e-01</td>
-      <td>9.586237e-01</td>
-      <td>6.291483e-01</td>
-      <td>1.056392e+00</td>
+      <td>1.184108e+00</td>
+      <td>9.579100e-01</td>
+      <td>9.743311e-01</td>
+      <td>6.831474e-01</td>
+      <td>8.645583e-01</td>
+      <td>1.138175e+00</td>
+      <td>7.869722e-01</td>
+      <td>9.586269e-01</td>
+      <td>6.291489e-01</td>
+      <td>1.056391e+00</td>
       <td>...</td>
-      <td>5.743116e-01</td>
-      <td>8.303492e-01</td>
-      <td>7.434690e-01</td>
-      <td>6.848839e-01</td>
-      <td>-5.174259e-01</td>
-      <td>5.174259e-01</td>
-      <td>1.098060e+00</td>
-      <td>-5.304055e-01</td>
-      <td>1.175655e+00</td>
-      <td>7.670963e-01</td>
+      <td>5.743109e-01</td>
+      <td>8.303484e-01</td>
+      <td>7.434678e-01</td>
+      <td>6.848834e-01</td>
+      <td>-5.174263e-01</td>
+      <td>5.174263e-01</td>
+      <td>1.098061e+00</td>
+      <td>-5.304060e-01</td>
+      <td>1.175654e+00</td>
+      <td>7.670987e-01</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.184109e+00</td>
-      <td>9.579088e-01</td>
+      <td>1.184108e+00</td>
+      <td>9.579100e-01</td>
       <td>1.626432e+00</td>
-      <td>1.409062e+00</td>
-      <td>1.537915e+00</td>
-      <td>1.138176e+00</td>
-      <td>1.465956e+00</td>
-      <td>1.673145e+00</td>
-      <td>1.339321e+00</td>
-      <td>1.056392e+00</td>
+      <td>1.409061e+00</td>
+      <td>1.537918e+00</td>
+      <td>1.138175e+00</td>
+      <td>1.465959e+00</td>
+      <td>1.673149e+00</td>
+      <td>1.339322e+00</td>
+      <td>1.056391e+00</td>
       <td>...</td>
-      <td>1.485816e+00</td>
-      <td>1.832098e+00</td>
-      <td>1.613977e+00</td>
-      <td>1.421840e+00</td>
-      <td>1.932644e+00</td>
-      <td>5.174259e-01</td>
-      <td>1.098060e+00</td>
-      <td>1.885350e+00</td>
-      <td>1.175655e+00</td>
-      <td>1.439091e+00</td>
+      <td>1.485815e+00</td>
+      <td>1.832096e+00</td>
+      <td>1.613976e+00</td>
+      <td>1.421839e+00</td>
+      <td>1.932642e+00</td>
+      <td>5.174263e-01</td>
+      <td>1.098061e+00</td>
+      <td>1.885348e+00</td>
+      <td>1.175654e+00</td>
+      <td>1.439094e+00</td>
     </tr>
   </tbody>
 </table>
@@ -20859,7 +20861,7 @@ Length: 798070, dtype: int64</pre>
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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kksu4Z///Cd//PEHy5cv5/zzzz/umoLuU6ZMmawhJUDWVG2LFi1i4cKFJCQkUKFCBXr27FnoNG6DBw9m9uzZREZGctlll2GMOeF9ypUrR2ho6HH32bhxI5MmTSIxMZFq1aoxfPhwDh8+jLU235/DWstzzz1Hnz59CqzNWsuwYcN49NFHj3vt4MGDJCcnA7B//34qV64MHP+d5T0uqM68wsLCst6b859teno6CQkJlC9f/rj3aGYPERE5KenpcOAA7N8P+/a5lrm/f//x+5nHBw/CoUNum9kyjw8dciH6yJHsIFxchIS4kF+EFZVwnV/iyPfXG2vtNGAaQHR0dLEctBoZGcnGjRv57bffOOecc3jnnXfyva5SpUrExsYyduxY+vXrd1xgPdF9GjVqxMcffwzADz/8wMaNGwHX+1utWjUqVKjAr7/+ytKlSwut929/+xsTJkygYcOGPP7446d8n5SUFCpWrEh4eDjbt2/ns88+o2fPnkRGRrJ161YSExOJiYlh3759lC9fnj59+jBlyhTOP/98wsLCWLduHXXr1qVixYpZ9+zduzf9+/fntttu48wzz+SPP/5g3759NGzYkLvvvpuhQ4fSsGFDRowYkfV9bN68mYSEBDp16sQ777xD165dfarTV3FxcTz//PPceeedAPz444+0adOG7t2789Zbb3Hffffx2Wef8eeff/p8TxERKWbS0lzI3bsXUlLcNud+Ssrx+3lbZlj21RlnQOXKULGiaxUquFa9OtStm31cvry79owzoGzZ47dly0JoqAuyoaHHN2Pcazm3OVvmOTj+tVLQyVRUwnUyUD/HcT1gq0e1BFy5cuWYNm0affv2pWbNmnTt2pVffsn3WU8GDx7M5ZdfzqJFi07qPgMGDGDGjBm0adOGmJgYzj33XAAuvPBCpk6dSlRUFOeddx4dO3YstN5q1arRvHlzVq9eTWxs7Cnfp3Xr1rRt25YWLVrQpEmTrKEZZcuWZdasWdxyyy0cOnSI8uXLs3DhQm644QaSkpJo164d1lpq1arFBx98kOuezZs355FHHiEuLo709HTCwsJ44YUXSEpKIjExkfj4eEJDQ3n33Xd59dVX6dWrF82aNeP1119n1KhRREREMHr0aJ/q9NXkyZO56aabiIqKIjU1le7duzN16lQeeOABhgwZQrt27ejRo0ehf/MiIiIestYF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RERERIqUYIXrRCDCGNPYGFMWuAKYl/MCY0xb4EVcsN4RpLpO3ZIlrtfa5NcpLyIiIiKlUVDCtbU2FbgZ+BxYA8y21q4yxow3xlyScdkTQCVgjjHmR2PMvAJu570dO2D9eo23FhEREZFcgjXmGmvtp8Cnec6Ny7H/l2DVctoSEtxW461FREREJAet0Hgq4uOhbFlo397rSkRERESkCFG4PhVLlrhgXa6c15WIiIiISBGicH2yjhwhPXEZtpOGhIiIiIhIbgrXJynhhR8IOXqEn6voYUYRERERyU3h+iS1vbQh46o8w/3zu3ldioiIiIgUMQrXJ6lckzpUe3As85bU5Ntvva5GRERERIoShetTMHIk1KwJEyZ4XYmIiIiIFCUK16egYkW4/Xb4739h+XKvqxERERGRokLh+hTddBNUrareaxERERHJpnB9iqpUgVtvhfffh19+8boaERERESkKFK5Pw623QqVK8O9/e12JiIiIiBQFCtenoUYNGD0aZs2C9eu9rkZEREREvKZwfZpuvx3KloXHHvO6EhERERHxmsL1aTr7bBgxAmbMgE2bvK5GRERERLykcO0Hd94JxsDEiV5XIiIiIiJeUrj2g/r1YfhwmD4dtm71uhoRERER8YrCtZ/ccw+kpsKTT3pdiYiIiIh4ReHaT5o0gSFDYOpU2LXL62pERERExAsK1370z3/CoUPwzDNeVyIiIiIiXlC49qPmzWHAAHjuOUhO9roaEREREQk2hWs/mzAB0tLgyivdGGwRERERKT0Urv3s3HNhyhT45hsYP97rakREREQkmBSuA+Dqq93UfI88Al9+6XU1IiIiIhIsCtcB8vzzcN55MHQobN/udTUiIiIiEgwK1wFSsSLMmgV79rie7PR0rysSERERkUBTuA6gqCh49llYsAAef9zrakREREQk0BSuA2zECBg8GO6/H+Ljva5GRERERAJJ4TrAjIFp06BhQ7eC4+7dXlckIiIiIoGicB0EVaq48df/939w7bVgrdcViYiIiEggKFwHSXQ0PPEEfPSRlkcXERERKakUroPo1luhf3+44w744AOvqxERERERf1O4DiJj4M03ITbWPeT41VdeVyQiIiIi/qRwHWSVKsEnn0BEBFxyCSxb5nVFIiIiIuIvCtceqF4dPv8cataEiy6CX3/1uiIRERER8QeFa4/UrQvz50NI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
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtcAAAF6CAYAAADS5HTwAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDIuMS4wLCBodHRwOi8vbWF0cGxvdGxpYi5vcmcvpW3flQAAIABJREFUeJzs3Xd4VUX+x/H3JIQiAaQq0gIKUkOAJHRpGlhBUUFBRQGl2LtixZ8oa1lsWEAUFZRViitrgVVQsQTQgCAKSFEiIEiVHkqS+f0xSUiFC9x7T3LzeT3PPKfcc06+iSz7yTBnxlhrERERERGRUxfmdQEiIiIiIqFC4VpERERExE8UrkVERERE/EThWkRERETETxSuRURERET8ROFaRERERMRPFK5FRERERPxE4VpERERExE8UrkVERERE/EThWkRERETET0p4XcCpqFKlio2KivK6DBEREREJcYsXL95ura16vOuKdLiOiopi0aJFXpchIiIiIiHOGPOHL9dpWIiIiIiIiJ8oXIuIiIiI+InCtYiIiIiInxTpMdf5OXLkCBs3buTgwYNelyISFKVLl6ZmzZpERER4XYqIiEixF3LheuPGjZQrV46oqCiMMV6XIxJQ1lp27NjBxo0bqVu3rtfliIiIFHshNyzk4MGDVK5cWcFaigVjDJUrV9a/1IiIiBQSIReuAQVrKVb0511ERKTwCMlw7bV27dqd0PXz5s2jV69eAHz00Uc89dRTx7x+5MiRzJ0795jPORlRUVFs3779pO8vyJAhQ1ixYoXfn+tvnTt3Pu686f78XgL18xYRERHvhNyY68Jg/vz5J33vxRdfzMUXX3zMa0aNGnXSzw+2tLQ03njjDa/L8JtQ+l5ERETE/4LSc22MedMYs9UY80sBnxtjzFhjzFpjzDJjTMtg1BUokZGRgOtJ7ty5M3379qVhw4ZcffXVWGsB+N///kfDhg3p0KED//nPf7Luffvtt7nlllvYvXs3UVFRpKenA3DgwAFq1arFkSNHGDRoEDNmzDjmc/7v//6PMWPGZB03bdqU5ORkAC655BJatWpFkyZNmDBhwjG/l3HjxnHfffflqO/WW2895nMiIyMZOXIkrVu3ZsGCBTl6hG+88UZiY2Np0qQJjz76aNY9SUlJtGvXjubNmxMfH8/evXtJS0vj3nvvJS4ujujoaF577bV8a3z33XeJj48nJiaG4cOHk5aWxh9//EH9+vXZvn076enpdOzYkc8//5zk5GQaNmzIwIEDiY6Opm/fvhw4cCDPMwuqM/v3EhkZyUMPPUTz5s1p06YNW7ZsAWDbtm306dOHuLg44uLiSExMBGDHjh0kJCTQokULhg8fnvVnQUREREJHsHqu3wZeBiYX8Pk/gPoZrTUwLmN7Su64A5YuPdWn5BQTAy+84Pv1S5YsYfny5Zx11lm0b9+exMREYmNjGTp0KF9++SXnnHMO/fr1y3NfhQoVaN68OV9//TVdunTh448/pnv37jmmWzt48OBxn5OfN998k0qVKpGSkkJcXBx9+vShcuXK+V7bt29f2rZtyzPPPAPA1KlTeeihh475nP3799O0adN8e9hHjx5NpUqVSEtLo1u3bixbtoyGDRvSr18/pk6dSlxcHHv27KFMmTJMnDiRChUqkJSUxKFDh2jfvj0JCQk5ZsVYuXIlU6dOJTExkYiICG666SamTJnCtddey4gRI7jhhhto3bo1jRs3JiEhgeTkZFatWsXEiRNp37491113Ha+++ir33HPPceuMjo7Occ3+/ftp06YNo0eP5r777uP111/n4Ycf5vbbb+fOO++kQ4cOrF+/nu7du7Ny5Uoee+wxOnTowMiRI/n000+P+4uNiIiIFD1BCdfW2m+MMVHHuKQ3MNm6rryFxpjTjTHVrbWbg1FfIMXHx1OzZk0AYmJiSE5OJjIykrp161K/fn0ABgwYkG/QygycXbp04f333+emm27K8fmvv/7q03NyGzt2LB9++CEAGzZsYM2aNQWG66pVq1KvXj0WLlxI/fr1WbVqFe3btz/mc8LDw+nTp0++z5s2bRoTJkwgNTWVzZs3s2LFCowxVK9enbi4OADKly8PwOeff86yZcuyeul3797NmjVrcoTrL774gsWLF2fdm5KSQrVq1QA3Pnr69OmMHz+epdl+y6pVq1bW9zBgwADGjh2bJ1znV2fucF2yZMmsMe6tWrVizpw5AMydOzfHuOw9e/awd+9evvnmm6x/XejZsycVK1bM92ckIiISNKmpcPgwHDqUc5uWBunpbpu9pacfbda6ln0/8xhynsts/vCPf/jnOQFSWMZc1wA2ZDvemHEuT7g2xgwDhgHUrl37mA89kR7mQClVqlTWfnh4OKmpqYBvMzxcfPHFPPDAA+zcuZPFixfTtWvXPNcU9JwSJUpkDSkBsqZqmzdvHnPnzmXBggWcdtppdO7c+bjTuPXr149p06bRsGFDLr30Uowxx3xO6dKlCQ8Pz/OcdevWMWbMGJKSkqhYsSKDBg3i4MGDWGvz/T6stbz00kt07969wNqstQwcOJAnn3wyz2cHDhxg48aNAOzbt49y5coBeX9muY8LqjO3iIiIrHuz/7dNT09nwYIFlClTJs89mtlDREROSHo67N8P+/bB3r2uZe7v25d3P/P4wAFISXHbzJZ5nJLiQvShQ0eDcFERFuZCfiFWWMJ1fokj319vrLUTgAkAsbGxRXLQasOGDVm3bh2//fYbZ599Nu+9916+10VGRhIfH8/tt99Or1698gTWYz0nKiqKTz75BIAff/yRdevWAa73t2LFipx22mn8+uuvLFy48Lj1XnbZZYwePZo6derw9NNPn/Rz9uzZQ9myZalQoQJbtmxh9uzZdO7cmYYNG7Jp0yaSkpKIi4tj7969lClThu7duzNu3Di6du1KREQEq1evpkaNGpQtWzbrmd26daN3797ceeedVKtWjZ07d7J3717q1KnDiBEjuPrqq6lTpw5Dhw7N+nmsX7+eBQsW0LZtW9577z06dOjgU52+SkhI4OWXX+bee+8FYOnSpcTExHDeeecxZcoUHn74YWbPns3ff//t8zNFRKSISUtzIXf3btizx22z7+/Zk3c/d8sMy74qVQrKlYOyZV077TTXKlWCGjWOHpcp464tVQpKlsy7LVkSwsNdkA0Pz9uMcZ9l32Zvmecg72fFoJOpsITrjUCtbMc1gU0e1RJwpUuXZsKECfTs2ZMqVarQoUMHfvkl33c96devH5dffjnz5s07oef06dOHyZMnExMTQ1xcHA0aNACgR48ejB8/nujoaM4991zatGlz3HorVqxI48aNWbFiBfHx8Sf9nObNm9OiRQuaNGlCvXr1soZmlCxZkqlTp3LrrbeSkpJCmTJlmDt3LkOGDCE5OZmWLVtiraVq1arMnDkzxzMbN27ME088QUJCAunp6URERPDKK6+QnJxMUlISiYmJhIeH88EHH/DWW2/RpUsXGjVqxKRJkxg+fDj169fnxhtv9KlOX40dO5abb76Z6OhoUlNTOe+88xg/fjyPPvooV155JS1btqRTp07H/ZcXERHxkLWux/jvv2HnTrfNvb9rlwvH+W337j3+1wgLgwoVoHz5o61qVTjnHBeSy5WDyMi8+7nPRUa6MJ3tvSzxjgnWjAUZY64/sdY2zeeznsAtwIW4FxnHWmvjj/fM2NhYm3te4pUrV9KoUSN/lCwhKDk5mV69ehX4y0xRpT/3IiIFsNYNhdixA7Zvd9vM/Z07j4blzP3s544cKfi54eEuGJ9+es5t7v3M8Jz7uHx5F4iLQU9uqDDGLLbWxh7vuqD0XBtj3gM6A1WMMRuBR4EIAGvteGAWLlivBQ4Ag4NRl4iIiBQx1rqe4a1bYdu2nC33ue3bXTt0qODnlS8PFSu6oROVKkGzZm6bea5ixbz7FSu6XmMFY8lHsGYLufI4n1vg5mDUIsVbVFRUyPVai4gUeQcOuGC8ZYtrmftbtx4NzJnb7dvdDBf5yRxWUbUq1KkDrVpB5cpQpYrbZrbM44oVNZRC/K6wjLkWERGRUHLkiAvEf/11tG3enPP4r79ciC7opb0KFaBaNReW69WD1q2PHme2zOMqVdwLeSIeU7gWERER3+3d60Lypk1umzswZx5v357//RUrwplnuhYXB2eckbdVq+Za6dLB/d5E/EDhWkRERFzvcWZozq9lfrZ/f957S5VyYbl6dTfTRYcOR4/POMNtzzxTgVmKBYVrERGRUJaW5nqS//wz/5YZnvfsyXvvaae5YHzWWdCyJfTs6farVz96/swz3ewYerlPBFC4LvJ8mVouOTmZ+fPnc9VVVwGwaNEiJk+ezNixY4NVZr42bdrEbbfdlrW8eVHUuXNnxowZQ2xswTPzDBkyhLvuuovGjRuf8teLiopi0aJFVKlS5ZSfJSIh4MgRF4w3bHBBeePGvG3z5rwr2pUo4YJxjRrQpAkkJLjj3K18eYVmkROkcF0MJCcn8+9//zsrXMfGxh4zDAZDamoqZ511VpEO1r564403vC5BRIoia93sGOvXu7Zhw9Ft5v7mze667MqWhVq1oGZNOP98F6AzW82ablu1qlvARET8Tv/LCoDJkycTHR1N8+bNueaaawAYNGhQjiAZGRkJwLx58+jUqRNXXHEFDRo04P7772fKlCnEx8fTrFkzfvvtt2Pen11ycjIdO3akZcuWtGzZkvnz5wNw//338+233xITE8Pzzz/PvHnz6NWrF+np6URFRbFr166sZ5xzzjls2bKFbdu20adPH+Li4oiLiyMxMTHP12vdujXLly/POu7cuTOLFy/mhx9+oF27drRo0YJ27dqxatUqAN5++20uv/xyLrroIhISEkhOTqZp06bHrH3evHl07tyZvn370rBhQ66++moyFz5KSkqiXbt2NG/enPj4ePbu3UtaWhr33nsvcXFxREdH89prr+X73+jdd98lPj6emJgYhg8fTlpaGn/88Qf169dn+/btpKen07FjRz7//HOSk5Np2LAhAwcOJDo6mr59+3LgwIE8z7zxxhuJjY2lSZMmPProozl+LpmLHUVGRvLQQw/RvHlz2rRpw5YtWwAK/Hnv2LGDhIQEWrRowfDhwwnWok8iEgRHjsC6dfDVV/DWW/DYY3D99XDBBXDuuW5IxhlnuJf++vSBO+6AcePgp5/cinzdu8Mjj8Abb8D//gfLlx9dGXDlSpgzxz33iSfgxhvh4ovd0I4zzlCwFgmg0O65vuMOWLrUv8+MiYEXXijw4+XLlzN69GgSExOpUqUKO3fuPO4jf/rpJ1auXEmlSpWoV68eQ4YM4YcffuDFF1/kpZde4oVjfL3sqlWrxpw5cyhdujRr1qzhyiuvZNGiRTz11FOMGTOGTz75BCBrKfWwsDB69+7Nhx9+yODBg/n++++JiorijDPO4KqrruLOO++kQ4cOrF+/nu7du7Ny5cocX69///5MmzaNxx57jM2bN7Np0yZatWrFnj17+OabbyhRogRz587lwQcf5IMPPgBgwYIFLFu2jEqVKpGcnHzc2gGWLFnC8uXLOeuss2jfvj2JiYnEx8fTr18/pk6dSlxcHHv27KFMmTJMnDiRChUqkJSUxKFDh2jfvj0JCQnUrVs362utXLmSqVOnkpiYSEREBDfddBNTpkzh2muvZcSIEdxwww20bt2axo0bZ/0SsGrVKiZOnEj79u257rrrePXVV7nnnnty/DxGjx5NpUqVSEtLo1u3bixbtozo6Ogc1+zfv582bdowevRo7rvvPl5//XUefvhhbr/99nx/3o899hgdOnRg5MiRfPrpp0yYMMGnPwsiUgikproe5uRkF6KTk1374w+33bgR0tNz3nPmmW5+5ubN4aKLoHZtd1yrltuvXFnDNEQKudAO1x748ssv6du3b9aY2EqVKh33nri4OKpXrw7A2WefTUJCAgDNmjXjq6++8vlrHzlyhFtuuYWlS5cS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
 "
 >
 </div>
@@ -20923,7 +20925,7 @@ Length: 798070, dtype: int64</pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Discussion-2.2:-Perform-Dimensionality-Reduction">Discussion 2.2: Perform Dimensionality Reduction<a class="anchor-link" href="#Discussion-2.2:-Perform-Dimensionality-Reduction">&#182;</a></h3><p>(Double-click this cell and replace this text with your own text, reporting your findings and decisions regarding dimensionality reduction. How many principal components / transformed features are you retaining for the next step of the analysis?)</p>
-<p>For further analysis, the first 39 pricipal components are being retained since these 39 together explain 90% of variance within the data. The rest 40 pricipal components explain only the remaining 10% of the data.</p>
+<p>For further analysis, the first 39 pricipal components are being retained since these 39 together explain 90% of variance within the data. The rest 40 pricipal components explain only the remaining 10% of the data. Please note that although the incremental variance explained by the principal components beyond 7-8 is very less, the cumulative explained by these 8 components alone are is less than 30%. Hence, 39 principal components are chosen since we are approximately creating only half as much features as were present in the orignal dataset (79) and at the same time explaining most of the variance (90%).</p>
 
 </div>
 </div>
@@ -20944,7 +20946,7 @@ Length: 798070, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">investigate_pc</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
@@ -20960,7 +20962,7 @@ Length: 798070, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map weights for the first principal component to corresponding feature names</span>
@@ -20969,6 +20971,372 @@ Length: 798070, dtype: int64</pre>
 <span class="c1"># other cells.</span>
 
 <span class="n">investigate_pc</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[100]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>65</th>
+      <td>PLZ8_ANTG3</td>
+      <td>0.200739</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>CAMEO_DEUG_2015</td>
+      <td>0.197939</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>PLZ8_ANTG4</td>
+      <td>0.195404</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>HH_EINKOMMEN_SCORE</td>
+      <td>0.195239</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>CAMEO_INTL_2015_wealth</td>
+      <td>0.194402</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>PLZ8_BAUMAX</td>
+      <td>0.192727</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>ORTSGR_KLS9</td>
+      <td>0.170078</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>EWDICHTE</td>
+      <td>0.167660</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>FINANZ_HAUSBAUER</td>
+      <td>0.159846</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>KBA05_ANTG4</td>
+      <td>0.141003</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>PLZ8_ANTG2</td>
+      <td>0.135547</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>ZABEOTYP</td>
+      <td>0.130261</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>KBA05_ANTG3</td>
+      <td>0.126636</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>ARBEIT</td>
+      <td>0.126480</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>ANZ_HAUSHALTE_AKTIV</td>
+      <td>0.125210</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>RELAT_AB</td>
+      <td>0.117720</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FINANZ_SPARER</td>
+      <td>0.114748</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>WOHNLAGE</td>
+      <td>0.085816</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>SEMIO_PFLICHT</td>
+      <td>0.084449</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>SEMIO_REL</td>
+      <td>0.080274</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>PRAEGENDE_JUGENDJAHRE_decade</td>
+      <td>0.076426</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>SEMIO_RAT</td>
+      <td>0.069983</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>GEBAEUDETYP</td>
+      <td>0.068629</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>SEMIO_TRADV</td>
+      <td>0.059860</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>GFK_URLAUBERTYP</td>
+      <td>0.059577</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>SEMIO_MAT</td>
+      <td>0.056502</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>REGIOTYP</td>
+      <td>0.055855</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>SEMIO_FAM</td>
+      <td>0.054343</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>OST_WEST_KZ_O</td>
+      <td>0.053492</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FINANZ_ANLEGER</td>
+      <td>0.052349</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>RETOURTYP_BK_S</td>
+      <td>-0.005012</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>SEMIO_VERT</td>
+      <td>-0.043128</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>MIN_GEBAEUDEJAHR</td>
+      <td>-0.045423</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>SEMIO_ERL</td>
+      <td>-0.047946</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>SEMIO_LUST</td>
+      <td>-0.050504</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>FINANZTYP</td>
+      <td>-0.050692</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>WOHNDAUER_2008</td>
+      <td>-0.051110</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>OST_WEST_KZ_W</td>
+      <td>-0.053492</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>ONLINE_AFFINITAET</td>
+      <td>-0.058431</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>KBA13_ANZAHL_PKW</td>
+      <td>-0.067462</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LP_FAMILIE_FEIN</td>
+      <td>-0.083235</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>FINANZ_VORSORGER</td>
+      <td>-0.084781</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>ALTERSKATEGORIE_GROB</td>
+      <td>-0.085005</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LP_FAMILIE_GROB</td>
+      <td>-0.085055</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>ANZ_PERSONEN</td>
+      <td>-0.085255</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>GEBAEUDETYP_RASTER</td>
+      <td>-0.105542</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>BALLRAUM</td>
+      <td>-0.106710</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>PRAEGENDE_JUGENDJAHRE_movement</td>
+      <td>-0.111869</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>GREEN_AVANTGARDE</td>
+      <td>-0.111869</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>CAMEO_INTL_2015_lifestyle</td>
+      <td>-0.114297</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>INNENSTADT</td>
+      <td>-0.141428</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>KONSUMNAEHE</td>
+      <td>-0.148203</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>PLZ8_GBZ</td>
+      <td>-0.150689</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>KBA05_ANTG1</td>
+      <td>-0.195412</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>KBA05_GBZ</td>
+      <td>-0.196416</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>FINANZ_MINIMALIST</td>
+      <td>-0.198168</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>PLZ8_ANTG1</td>
+      <td>-0.203187</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>MOBI_REGIO</td>
+      <td>-0.203224</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>LP_STATUS_GROB</td>
+      <td>-0.215639</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>LP_STATUS_FEIN</td>
+      <td>-0.216863</td>
+    </tr>
+  </tbody>
+</table>
+<p>79 rows × 2 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map weights for the second principal component to corresponding feature names</span>
+<span class="c1"># and then print the linked values, sorted by weight.</span>
+
+<span class="n">investigate_pc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -21010,154 +21378,154 @@ Length: 798070, dtype: int64</pre>
   </thead>
   <tbody>
     <tr>
-      <th>65</th>
-      <td>PLZ8_ANTG3</td>
-      <td>0.202493</td>
+      <th>0</th>
+      <td>ALTERSKATEGORIE_GROB</td>
+      <td>0.263578</td>
     </tr>
     <tr>
-      <th>48</th>
-      <td>CAMEO_DEUG_2015</td>
-      <td>0.196965</td>
+      <th>5</th>
+      <td>FINANZ_VORSORGER</td>
+      <td>0.235497</td>
     </tr>
     <tr>
-      <th>66</th>
-      <td>PLZ8_ANTG4</td>
-      <td>0.196369</td>
+      <th>25</th>
+      <td>SEMIO_ERL</td>
+      <td>0.223604</td>
     </tr>
     <tr>
-      <th>77</th>
-      <td>CAMEO_INTL_2015_wealth</td>
-      <td>0.193586</td>
+      <th>24</th>
+      <td>SEMIO_LUST</td>
+      <td>0.182723</td>
     </tr>
     <tr>
-      <th>39</th>
-      <td>HH_EINKOMMEN_SCORE</td>
-      <td>0.193586</td>
+      <th>18</th>
+      <td>RETOURTYP_BK_S</td>
+      <td>0.161703</td>
     </tr>
     <tr>
-      <th>67</th>
-      <td>PLZ8_BAUMAX</td>
-      <td>0.192999</td>
-    </tr>
-    <tr>
-      <th>71</th>
-      <td>ORTSGR_KLS9</td>
-      <td>0.173809</td>
-    </tr>
-    <tr>
-      <th>55</th>
-      <td>EWDICHTE</td>
-      <td>0.171102</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>FINANZ_HAUSBAUER</td>
-      <td>0.160048</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>KBA05_ANTG4</td>
-      <td>0.140905</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>PLZ8_ANTG2</td>
-      <td>0.137414</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>ZABEOTYP</td>
-      <td>0.129116</td>
-    </tr>
-    <tr>
-      <th>70</th>
-      <td>ARBEIT</td>
-      <td>0.127966</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>KBA05_ANTG3</td>
-      <td>0.126982</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>ANZ_HAUSHALTE_AKTIV</td>
-      <td>0.125193</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>RELAT_AB</td>
-      <td>0.119341</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>FINANZ_SPARER</td>
-      <td>0.113849</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>SEMIO_PFLICHT</td>
-      <td>0.083712</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>SEMIO_REL</td>
-      <td>0.079385</td>
-    </tr>
-    <tr>
-      <th>75</th>
-      <td>PRAEGENDE_JUGENDJAHRE_decade</td>
-      <td>0.075701</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>SEMIO_RAT</td>
-      <td>0.069758</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>GEBAEUDETYP</td>
-      <td>0.068712</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>SEMIO_TRADV</td>
-      <td>0.059490</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>GFK_URLAUBERTYP</td>
-      <td>0.058945</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>SEMIO_MAT</td>
-      <td>0.056245</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>REGIOTYP</td>
-      <td>0.053907</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>SEMIO_FAM</td>
-      <td>0.053620</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>OST_WEST_KZ_O</td>
-      <td>0.052666</td>
+      <th>9</th>
+      <td>FINANZTYP</td>
+      <td>0.117566</td>
     </tr>
     <tr>
       <th>40</th>
       <td>W_KEIT_KIND_HH</td>
-      <td>0.050311</td>
+      <td>0.115699</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>FINANZ_ANLEGER</td>
-      <td>0.050148</td>
+      <th>33</th>
+      <td>SHOPPER_TYP</td>
+      <td>0.103600</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>SEMIO_KRIT</td>
+      <td>0.103453</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>FINANZ_HAUSBAUER</td>
+      <td>0.094190</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>SEMIO_KAEM</td>
+      <td>0.093265</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>FINANZ_MINIMALIST</td>
+      <td>0.091647</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ANREDE_KZ</td>
+      <td>0.074443</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>PLZ8_ANTG4</td>
+      <td>0.066395</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>PLZ8_ANTG3</td>
+      <td>0.066358</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>EWDICHTE</td>
+      <td>0.065575</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>ORTSGR_KLS9</td>
+      <td>0.064892</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>PLZ8_BAUMAX</td>
+      <td>0.062831</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>WOHNDAUER_2008</td>
+      <td>0.061835</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>SEMIO_DOM</td>
+      <td>0.056932</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>CAMEO_INTL_2015_wealth</td>
+      <td>0.054225</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>KBA05_ANTG4</td>
+      <td>0.053441</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>ARBEIT</td>
+      <td>0.052633</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>CAMEO_DEUG_2015</td>
+      <td>0.049704</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>RELAT_AB</td>
+      <td>0.047686</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>ANZ_HAUSHALTE_AKTIV</td>
+      <td>0.047186</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>PLZ8_ANTG2</td>
+      <td>0.044243</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>HH_EINKOMMEN_SCORE</td>
+      <td>0.035842</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>KBA05_ANTG3</td>
+      <td>0.031112</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>OST_WEST_KZ_O</td>
+      <td>0.028726</td>
     </tr>
     <tr>
       <th>...</th>
@@ -21165,154 +21533,154 @@ Length: 798070, dtype: int64</pre>
       <td>...</td>
     </tr>
     <tr>
-      <th>23</th>
-      <td>SEMIO_VERT</td>
-      <td>-0.043280</td>
+      <th>10</th>
+      <td>GFK_URLAUBERTYP</td>
+      <td>-0.039601</td>
     </tr>
     <tr>
       <th>46</th>
       <td>MIN_GEBAEUDEJAHR</td>
-      <td>-0.045388</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>SEMIO_ERL</td>
-      <td>-0.047569</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>SEMIO_LUST</td>
-      <td>-0.049873</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>FINANZTYP</td>
-      <td>-0.050745</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>WOHNDAUER_2008</td>
-      <td>-0.051236</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>OST_WEST_KZ_W</td>
-      <td>-0.052666</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>ONLINE_AFFINITAET</td>
-      <td>-0.058230</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>KBA13_ANZAHL_PKW</td>
-      <td>-0.067270</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>WOHNLAGE</td>
-      <td>-0.070805</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>LP_FAMILIE_FEIN</td>
-      <td>-0.083420</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>FINANZ_VORSORGER</td>
-      <td>-0.083991</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>ALTERSKATEGORIE_GROB</td>
-      <td>-0.084549</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>LP_FAMILIE_GROB</td>
-      <td>-0.085217</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>ANZ_PERSONEN</td>
-      <td>-0.085432</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>GEBAEUDETYP_RASTER</td>
-      <td>-0.105599</td>
-    </tr>
-    <tr>
-      <th>76</th>
-      <td>PRAEGENDE_JUGENDJAHRE_movement</td>
-      <td>-0.108839</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>GREEN_AVANTGARDE</td>
-      <td>-0.108839</td>
+      <td>-0.041047</td>
     </tr>
     <tr>
       <th>54</th>
       <td>BALLRAUM</td>
-      <td>-0.109200</td>
-    </tr>
-    <tr>
-      <th>78</th>
-      <td>CAMEO_INTL_2015_lifestyle</td>
-      <td>-0.113168</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>INNENSTADT</td>
-      <td>-0.143619</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>KONSUMNAEHE</td>
-      <td>-0.149840</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>PLZ8_GBZ</td>
-      <td>-0.150672</td>
+      <td>-0.042682</td>
     </tr>
     <tr>
       <th>49</th>
       <td>KBA05_ANTG1</td>
-      <td>-0.195555</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>KBA05_GBZ</td>
-      <td>-0.197088</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>FINANZ_MINIMALIST</td>
-      <td>-0.197939</td>
+      <td>-0.045188</td>
     </tr>
     <tr>
       <th>59</th>
       <td>MOBI_REGIO</td>
-      <td>-0.203827</td>
+      <td>-0.049261</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>KONSUMNAEHE</td>
+      <td>-0.049856</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>SEMIO_VERT</td>
+      <td>-0.051698</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>INNENSTADT</td>
+      <td>-0.053666</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>PLZ8_GBZ</td>
+      <td>-0.054160</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>HEALTH_TYP</td>
+      <td>-0.060581</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>KBA05_GBZ</td>
+      <td>-0.060639</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>ANZ_PERSONEN</td>
+      <td>-0.064132</td>
     </tr>
     <tr>
       <th>63</th>
       <td>PLZ8_ANTG1</td>
-      <td>-0.203836</td>
+      <td>-0.066329</td>
     </tr>
     <tr>
-      <th>16</th>
-      <td>LP_STATUS_GROB</td>
-      <td>-0.215237</td>
+      <th>13</th>
+      <td>LP_FAMILIE_FEIN</td>
+      <td>-0.071804</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>LP_STATUS_FEIN</td>
-      <td>-0.216895</td>
+      <th>17</th>
+      <td>NATIONALITAET_KZ</td>
+      <td>-0.072187</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LP_FAMILIE_GROB</td>
+      <td>-0.073073</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>SEMIO_SOZ</td>
+      <td>-0.094213</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CJT_GESAMTTYP</td>
+      <td>-0.127852</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>SEMIO_MAT</td>
+      <td>-0.160664</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>ONLINE_AFFINITAET</td>
+      <td>-0.162705</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>SEMIO_FAM</td>
+      <td>-0.177129</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>SEMIO_RAT</td>
+      <td>-0.179355</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FINANZ_ANLEGER</td>
+      <td>-0.208583</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>SEMIO_KULT</td>
+      <td>-0.210437</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>SEMIO_TRADV</td>
+      <td>-0.231460</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>FINANZ_UNAUFFAELLIGER</td>
+      <td>-0.233456</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>SEMIO_PFLICHT</td>
+      <td>-0.233872</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FINANZ_SPARER</td>
+      <td>-0.245713</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>PRAEGENDE_JUGENDJAHRE_decade</td>
+      <td>-0.247324</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>SEMIO_REL</td>
+      <td>-0.255832</td>
     </tr>
   </tbody>
 </table>
@@ -21331,10 +21699,10 @@ Length: 798070, dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map weights for the second principal component to corresponding feature names</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map weights for the third principal component to corresponding feature names</span>
 <span class="c1"># and then print the linked values, sorted by weight.</span>
 
-<span class="n">investigate_pc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">investigate_pc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -21376,520 +21744,154 @@ Length: 798070, dtype: int64</pre>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>ALTERSKATEGORIE_GROB</td>
-      <td>0.263613</td>
+      <th>23</th>
+      <td>SEMIO_VERT</td>
+      <td>0.337335</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>FINANZ_VORSORGER</td>
-      <td>0.235921</td>
+      <th>19</th>
+      <td>SEMIO_SOZ</td>
+      <td>0.260198</td>
     </tr>
     <tr>
-      <th>25</th>
-      <td>SEMIO_ERL</td>
-      <td>0.223218</td>
+      <th>20</th>
+      <td>SEMIO_FAM</td>
+      <td>0.254452</td>
     </tr>
     <tr>
-      <th>24</th>
-      <td>SEMIO_LUST</td>
-      <td>0.182887</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>RETOURTYP_BK_S</td>
-      <td>0.161623</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>FINANZTYP</td>
-      <td>0.117633</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>W_KEIT_KIND_HH</td>
-      <td>0.114936</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>SHOPPER_TYP</td>
-      <td>0.103607</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>SEMIO_KRIT</td>
-      <td>0.102981</td>
+      <th>26</th>
+      <td>SEMIO_KULT</td>
+      <td>0.242601</td>
     </tr>
     <tr>
       <th>3</th>
       <td>FINANZ_MINIMALIST</td>
-      <td>0.093193</td>
+      <td>0.149703</td>
     </tr>
     <tr>
-      <th>30</th>
-      <td>SEMIO_KAEM</td>
-      <td>0.093095</td>
+      <th>9</th>
+      <td>FINANZTYP</td>
+      <td>0.116989</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>FINANZ_HAUSBAUER</td>
-      <td>0.092582</td>
+      <th>18</th>
+      <td>RETOURTYP_BK_S</td>
+      <td>0.097857</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>ANREDE_KZ</td>
-      <td>0.073950</td>
+      <th>21</th>
+      <td>SEMIO_REL</td>
+      <td>0.083809</td>
     </tr>
     <tr>
-      <th>55</th>
-      <td>EWDICHTE</td>
-      <td>0.067040</td>
+      <th>5</th>
+      <td>FINANZ_VORSORGER</td>
+      <td>0.082744</td>
     </tr>
     <tr>
-      <th>71</th>
-      <td>ORTSGR_KLS9</td>
-      <td>0.066618</td>
+      <th>40</th>
+      <td>W_KEIT_KIND_HH</td>
+      <td>0.079436</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>SEMIO_MAT</td>
+      <td>0.065344</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>ALTERSKATEGORIE_GROB</td>
+      <td>0.060337</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>PLZ8_BAUMAX</td>
+      <td>0.053254</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>SEMIO_LUST</td>
+      <td>0.049425</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>PLZ8_ANTG4</td>
+      <td>0.049226</td>
     </tr>
     <tr>
       <th>65</th>
       <td>PLZ8_ANTG3</td>
-      <td>0.066045</td>
-    </tr>
-    <tr>
-      <th>66</th>
-      <td>PLZ8_ANTG4</td>
-      <td>0.065677</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>WOHNDAUER_2008</td>
-      <td>0.062074</td>
-    </tr>
-    <tr>
-      <th>67</th>
-      <td>PLZ8_BAUMAX</td>
-      <td>0.061716</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>SEMIO_DOM</td>
-      <td>0.057553</td>
-    </tr>
-    <tr>
-      <th>70</th>
-      <td>ARBEIT</td>
-      <td>0.052881</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>KBA05_ANTG4</td>
-      <td>0.052214</td>
-    </tr>
-    <tr>
-      <th>77</th>
-      <td>CAMEO_INTL_2015_wealth</td>
-      <td>0.052195</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>RELAT_AB</td>
-      <td>0.048144</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>CAMEO_DEUG_2015</td>
-      <td>0.047594</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>ANZ_HAUSHALTE_AKTIV</td>
-      <td>0.046110</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>PLZ8_ANTG2</td>
-      <td>0.044490</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>HH_EINKOMMEN_SCORE</td>
-      <td>0.033120</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>KBA05_ANTG3</td>
-      <td>0.030224</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>OST_WEST_KZ_O</td>
-      <td>0.027388</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>MIN_GEBAEUDEJAHR</td>
-      <td>-0.040854</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>WOHNLAGE</td>
-      <td>-0.041625</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>KBA05_ANTG1</td>
-      <td>-0.043547</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>BALLRAUM</td>
-      <td>-0.043711</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>MOBI_REGIO</td>
-      <td>-0.047900</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>KONSUMNAEHE</td>
-      <td>-0.049928</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>SEMIO_VERT</td>
-      <td>-0.050940</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>PLZ8_GBZ</td>
-      <td>-0.052963</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>INNENSTADT</td>
-      <td>-0.054348</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>KBA05_GBZ</td>
-      <td>-0.059388</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>HEALTH_TYP</td>
-      <td>-0.060762</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>ANZ_PERSONEN</td>
-      <td>-0.063094</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>PLZ8_ANTG1</td>
-      <td>-0.065234</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>LP_FAMILIE_FEIN</td>
-      <td>-0.070764</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>LP_FAMILIE_GROB</td>
-      <td>-0.072006</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>NATIONALITAET_KZ</td>
-      <td>-0.072424</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>SEMIO_SOZ</td>
-      <td>-0.093859</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>CJT_GESAMTTYP</td>
-      <td>-0.127480</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>SEMIO_MAT</td>
-      <td>-0.160668</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>ONLINE_AFFINITAET</td>
-      <td>-0.161488</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>SEMIO_FAM</td>
-      <td>-0.177058</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>SEMIO_RAT</td>
-      <td>-0.179596</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>FINANZ_ANLEGER</td>
-      <td>-0.209984</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>SEMIO_KULT</td>
-      <td>-0.210361</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>SEMIO_TRADV</td>
-      <td>-0.231399</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>FINANZ_UNAUFFAELLIGER</td>
-      <td>-0.232981</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>SEMIO_PFLICHT</td>
-      <td>-0.234125</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>FINANZ_SPARER</td>
-      <td>-0.246337</td>
-    </tr>
-    <tr>
-      <th>75</th>
-      <td>PRAEGENDE_JUGENDJAHRE_decade</td>
-      <td>-0.247554</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>SEMIO_REL</td>
-      <td>-0.255962</td>
-    </tr>
-  </tbody>
-</table>
-<p>79 rows × 2 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map weights for the third principal component to corresponding feature names</span>
-<span class="c1"># and then print the linked values, sorted by weight.</span>
-
-<span class="n">investigate_pc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[103]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>feature</th>
-      <th>weight</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>23</th>
-      <td>SEMIO_VERT</td>
-      <td>0.337369</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>SEMIO_SOZ</td>
-      <td>0.260485</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>SEMIO_FAM</td>
-      <td>0.254662</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>SEMIO_KULT</td>
-      <td>0.242731</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>FINANZ_MINIMALIST</td>
-      <td>0.149767</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>FINANZTYP</td>
-      <td>0.116348</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>RETOURTYP_BK_S</td>
-      <td>0.097364</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>SEMIO_REL</td>
-      <td>0.084346</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>FINANZ_VORSORGER</td>
-      <td>0.082188</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>W_KEIT_KIND_HH</td>
-      <td>0.078574</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>SEMIO_MAT</td>
-      <td>0.065877</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>ALTERSKATEGORIE_GROB</td>
-      <td>0.059331</td>
-    </tr>
-    <tr>
-      <th>67</th>
-      <td>PLZ8_BAUMAX</td>
-      <td>0.053361</td>
-    </tr>
-    <tr>
-      <th>66</th>
-      <td>PLZ8_ANTG4</td>
-      <td>0.049760</td>
+      <td>0.046518</td>
     </tr>
     <tr>
       <th>71</th>
       <td>ORTSGR_KLS9</td>
-      <td>0.049295</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>SEMIO_LUST</td>
-      <td>0.049005</td>
+      <td>0.046388</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GREEN_AVANTGARDE</td>
-      <td>0.047987</td>
+      <td>0.044687</td>
     </tr>
     <tr>
       <th>76</th>
       <td>PRAEGENDE_JUGENDJAHRE_movement</td>
-      <td>0.047987</td>
-    </tr>
-    <tr>
-      <th>65</th>
-      <td>PLZ8_ANTG3</td>
-      <td>0.047568</td>
+      <td>0.044687</td>
     </tr>
     <tr>
       <th>55</th>
       <td>EWDICHTE</td>
-      <td>0.046628</td>
+      <td>0.043866</td>
     </tr>
     <tr>
       <th>70</th>
       <td>ARBEIT</td>
-      <td>0.040332</td>
+      <td>0.039460</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LP_STATUS_GROB</td>
-      <td>0.038344</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>RELAT_AB</td>
-      <td>0.032701</td>
+      <td>0.037372</td>
     </tr>
     <tr>
       <th>48</th>
       <td>CAMEO_DEUG_2015</td>
-      <td>0.030445</td>
+      <td>0.031734</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>RELAT_AB</td>
+      <td>0.031509</td>
     </tr>
     <tr>
       <th>77</th>
       <td>CAMEO_INTL_2015_wealth</td>
-      <td>0.030122</td>
+      <td>0.031350</td>
     </tr>
     <tr>
       <th>64</th>
       <td>PLZ8_ANTG2</td>
-      <td>0.029532</td>
+      <td>0.028253</td>
     </tr>
     <tr>
       <th>41</th>
       <td>WOHNDAUER_2008</td>
-      <td>0.027683</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>KBA05_ANTG4</td>
-      <td>0.027096</td>
+      <td>0.027901</td>
     </tr>
     <tr>
       <th>73</th>
       <td>OST_WEST_KZ_O</td>
-      <td>0.026451</td>
+      <td>0.027685</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>KBA05_ANTG4</td>
+      <td>0.027566</td>
     </tr>
     <tr>
       <th>42</th>
       <td>ANZ_HAUSHALTE_AKTIV</td>
-      <td>0.023924</td>
+      <td>0.024326</td>
     </tr>
     <tr>
       <th>...</th>
@@ -21897,154 +21899,154 @@ Length: 798070, dtype: int64</pre>
       <td>...</td>
     </tr>
     <tr>
-      <th>13</th>
-      <td>LP_FAMILIE_FEIN</td>
-      <td>-0.021694</td>
-    </tr>
-    <tr>
       <th>59</th>
       <td>MOBI_REGIO</td>
-      <td>-0.021911</td>
+      <td>-0.022095</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LP_FAMILIE_FEIN</td>
+      <td>-0.022513</td>
     </tr>
     <tr>
       <th>53</th>
       <td>KBA05_GBZ</td>
-      <td>-0.023176</td>
+      <td>-0.023312</td>
     </tr>
     <tr>
       <th>14</th>
       <td>LP_FAMILIE_GROB</td>
-      <td>-0.023429</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>OST_WEST_KZ_W</td>
-      <td>-0.026451</td>
+      <td>-0.024271</td>
     </tr>
     <tr>
       <th>12</th>
       <td>HEALTH_TYP</td>
-      <td>-0.026805</td>
+      <td>-0.026892</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>OST_WEST_KZ_W</td>
+      <td>-0.027685</td>
     </tr>
     <tr>
       <th>62</th>
       <td>KBA13_ANZAHL_PKW</td>
-      <td>-0.027349</td>
+      <td>-0.027712</td>
     </tr>
     <tr>
       <th>57</th>
       <td>GEBAEUDETYP_RASTER</td>
-      <td>-0.032158</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>CJT_GESAMTTYP</td>
-      <td>-0.033617</td>
+      <td>-0.032026</td>
     </tr>
     <tr>
       <th>54</th>
       <td>BALLRAUM</td>
-      <td>-0.035250</td>
+      <td>-0.033136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CJT_GESAMTTYP</td>
+      <td>-0.034563</td>
     </tr>
     <tr>
       <th>45</th>
       <td>KONSUMNAEHE</td>
-      <td>-0.038498</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>PLZ8_GBZ</td>
-      <td>-0.043330</td>
+      <td>-0.037272</td>
     </tr>
     <tr>
       <th>56</th>
       <td>INNENSTADT</td>
-      <td>-0.044803</td>
+      <td>-0.042938</td>
     </tr>
     <tr>
-      <th>60</th>
-      <td>ONLINE_AFFINITAET</td>
-      <td>-0.046966</td>
+      <th>69</th>
+      <td>PLZ8_GBZ</td>
+      <td>-0.043727</td>
     </tr>
     <tr>
       <th>8</th>
       <td>FINANZ_HAUSBAUER</td>
-      <td>-0.047233</td>
+      <td>-0.046438</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>ONLINE_AFFINITAET</td>
+      <td>-0.048380</td>
     </tr>
     <tr>
       <th>63</th>
       <td>PLZ8_ANTG1</td>
-      <td>-0.050200</td>
+      <td>-0.049993</td>
     </tr>
     <tr>
       <th>36</th>
       <td>ZABEOTYP</td>
-      <td>-0.060843</td>
+      <td>-0.059827</td>
     </tr>
     <tr>
       <th>32</th>
       <td>SEMIO_TRADV</td>
-      <td>-0.061438</td>
+      <td>-0.062396</td>
     </tr>
     <tr>
       <th>31</th>
       <td>SEMIO_PFLICHT</td>
-      <td>-0.062014</td>
+      <td>-0.062666</td>
     </tr>
     <tr>
       <th>4</th>
       <td>FINANZ_SPARER</td>
-      <td>-0.090962</td>
+      <td>-0.091470</td>
     </tr>
     <tr>
       <th>7</th>
       <td>FINANZ_UNAUFFAELLIGER</td>
-      <td>-0.091344</td>
+      <td>-0.092736</td>
     </tr>
     <tr>
       <th>75</th>
       <td>PRAEGENDE_JUGENDJAHRE_decade</td>
-      <td>-0.094447</td>
+      <td>-0.095189</td>
     </tr>
     <tr>
       <th>33</th>
       <td>SHOPPER_TYP</td>
-      <td>-0.123859</td>
+      <td>-0.124040</td>
     </tr>
     <tr>
       <th>6</th>
       <td>FINANZ_ANLEGER</td>
-      <td>-0.173028</td>
+      <td>-0.172189</td>
     </tr>
     <tr>
       <th>25</th>
       <td>SEMIO_ERL</td>
-      <td>-0.186918</td>
+      <td>-0.186154</td>
     </tr>
     <tr>
       <th>27</th>
       <td>SEMIO_RAT</td>
-      <td>-0.199009</td>
+      <td>-0.199838</td>
     </tr>
     <tr>
       <th>28</th>
       <td>SEMIO_KRIT</td>
-      <td>-0.274021</td>
+      <td>-0.273948</td>
     </tr>
     <tr>
       <th>29</th>
       <td>SEMIO_DOM</td>
-      <td>-0.307535</td>
+      <td>-0.308886</td>
     </tr>
     <tr>
       <th>30</th>
       <td>SEMIO_KAEM</td>
-      <td>-0.332293</td>
+      <td>-0.332876</td>
     </tr>
     <tr>
       <th>1</th>
       <td>ANREDE_KZ</td>
-      <td>-0.363054</td>
+      <td>-0.363186</td>
     </tr>
   </tbody>
 </table>
@@ -22177,10 +22179,10 @@ The third principal component appears to make a distincition between sociable an
 
  
  
-<div id="29bb57b7-70dc-4c87-b6f4-ccf417058644"></div>
+<div id="b7676350-b8c2-4e0c-aa76-b153b95cab64"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#29bb57b7-70dc-4c87-b6f4-ccf417058644');
+var element = $('#b7676350-b8c2-4e0c-aa76-b153b95cab64');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "3b815899b9f843298be387a9bd50b9f7", "version_major": 2, "version_minor": 0}
@@ -23269,6 +23271,14 @@ Length: 79, dtype: int64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="The-rows-with-a-large-number-of-missing-values-are-added-to-cluster-number-12---both-for-customer-and-general-population-datasets.">The rows with a large number of missing values are added to cluster number <code>12</code> - both for customer and general population datasets.<a class="anchor-link" href="#The-rows-with-a-large-number-of-missing-values-are-added-to-cluster-number-12---both-for-customer-and-general-population-datasets.">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Adding rows with missing values beyond the set threshold to the new cluster 12</p>
 
 </div>
@@ -24067,6 +24077,7 @@ Length: 79, dtype: int64</pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Discussion-3.3:-Compare-Customer-Data-to-Demographics-Data">Discussion 3.3: Compare Customer Data to Demographics Data<a class="anchor-link" href="#Discussion-3.3:-Compare-Customer-Data-to-Demographics-Data">&#182;</a></h3><p>(Double-click this cell and replace this text with your own text, reporting findings and conclusions from the clustering analysis. Can we describe segments of the population that are relatively popular with the mail-order company, or relatively unpopular with the company?)</p>
+<p><strong>The rows with a large number of missing values are added to the cluster number <code>12</code> - both for customer and general population datasets (Refer above)</strong></p>
 <p>Cluster 9 is the most overrepresented cluster in the customer data as compared to the population data. Looking at this cluster center, it is apparent that the most intense (positive or negative) value is for the first principal component (-4.048). Since the sign of the value is negative, this cluster represents the opposite of what the first principal component stands for. The first principal component assigns a high positive value for not-so-rich people. Therefore, this cluster represents rich people. In other words, cluster 9 represents rich people. And these set of people are overrepresented in the customer data.</p>
 <p>Similarly, cluster 0 is the most underrepresented cluster in the customer data as compare to the population data. Again, looking at this cluster center, the first principal component has the most intense value (positive or negative). Only this time, the value is positive instead of negative. Therefore, applying the same logic, this cluster represents not-so-rich people. Hence, the underrepresented cluster in the customer data are not-so-rich once. This also agrees with the intuitive guess.</p>
 
